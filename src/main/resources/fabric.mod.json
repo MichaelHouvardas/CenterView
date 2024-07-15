@@ -3,13 +3,13 @@
 	"id": "center-view",
 	"version": "${version}",
 	"name": "Center View",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Centers the camera vertically on a key press!",
 	"authors": [
-		"Me!"
+		"MALEgolf100"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/project/center-view",
+		"sources": "https://github.com/MichaelHouvardas/CenterView"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/center-view/icon.png",
