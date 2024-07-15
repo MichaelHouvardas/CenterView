@@ -10,10 +10,11 @@ import org.lwjgl.glfw.GLFW;
 
 public class CenterViewClient implements ClientModInitializer {
 	private static KeyBinding centerViewKeyBinding;
+	private boolean isYAxisLocked = false;
 
 	@Override
 	public void onInitializeClient() {
-		// Registers the key binding
+		// Register the key binding
 		centerViewKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 				"key.centerview.center_view",
 				InputUtil.Type.KEYSYM,
@@ -21,18 +22,28 @@ public class CenterViewClient implements ClientModInitializer {
 				"category.centerview"
 		));
 
-		// Registers the tick event handler
+		// Register the tick event handler
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (centerViewKeyBinding.wasPressed()) {
-				centerView();
+			if (client.player != null) {
+				if (centerViewKeyBinding.isPressed()) {
+					lockYAxis(client);
+				} else if (isYAxisLocked) {
+					unlockYAxis(client);
+				}
 			}
 		});
 	}
 
-	private void centerView() {
-		MinecraftClient client = MinecraftClient.getInstance();
-		if (client.player != null) {
-			client.player.setPitch(0.0F); // Centers the camera vertically
+	private void lockYAxis(MinecraftClient client) {
+		if (!isYAxisLocked) {
+			client.player.setPitch(0.0F); // Center the camera vertically
+			isYAxisLocked = true;
 		}
+		// Prevent any vertical movement
+		client.player.setPitch(0.0F);
+	}
+
+	private void unlockYAxis(MinecraftClient client) {
+		isYAxisLocked = false;
 	}
 }
